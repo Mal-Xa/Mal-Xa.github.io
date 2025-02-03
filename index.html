@@ -1,28 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <meta name="viewport" content="width=device-width"/>
-
-    <title>Idk Not something that's serious</title>
-
-	<link rel="stylesheet" href="style.css"
-</head>
-
-<body>
-    <div class="main">
-        <div class="cover black" data-color="black"></div>
-        <div class="container">
-            <h1 class="logo cursive">
-          Bwahahahaha testing Ekuih </h1>
-
-           
-        </div>
-        
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Song Lyrics Viewer</title>
+    <script type="module" src="songs.js"></script>
+    <script type="module" src="app.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        font-family: fantasy;
+      }
+      .container {
+        display: flex;
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .song-list {
+        width: 300px;
+        margin-right: 20px;
+        list-style: none;
+        padding: 0;
+        border-right: 2px solid #ddd;
+        max-height: 1800px;
+        overflow-y: auto;
+      }
+      .song-list ol {
+        padding-left: 20px;
+      }
+      .song-list li {
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        transition: background 0.3s ease;
+      }
+      .song-list li:hover {
+        background: #f0f0f0;
+      }
+      .lyrics {
+        white-space: pre-wrap;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+      }
+      h2 {
+        color: #222;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Conference Hla Bu 2024</h1>
+    <div class="container" id="app">
+      <ol class="song-list">
+        <li
+          v-for="song in songs"
+          :key="song.number"
+          @click="selectedSong = song"
+        >
+          {{ song.number }}. {{ song.title }}
+        </li>
+      </ol>
+      <div v-if="selectedSong">
+        <h2>{{ selectedSong.title }}</h2>
+        <p class="lyrics">{{ selectedSong.lyrics }}</p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
