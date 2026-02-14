@@ -65,7 +65,7 @@
 
     <script>
         (function() {
-            console.log('🔄 OAuth callback page loaded');
+            console.log('🔄 Netlify callback page loaded');
             console.log('📍 Current URL:', window.location.href);
             
             try {
@@ -119,7 +119,6 @@
                             iframe.src = appUrl;
                             document.body.appendChild(iframe);
                             
-                            // Clean up iframe after a delay
                             setTimeout(() => {
                                 if (iframe.parentNode) {
                                     iframe.parentNode.removeChild(iframe);
@@ -136,7 +135,7 @@
                                 <p>Click the button below to open the app:</p>
                                 <a href="${appUrl}" class="button">Open Sora's Stream</a>
                                 <p style="font-size: 12px; margin-top: 20px; color: #999;">
-                                    If the app doesn't open, make sure it's installed and try again.
+                                    If the app doesn't open, make sure it's installed.
                                 </p>
                             `;
                         }, 2000);
