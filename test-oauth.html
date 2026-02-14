@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OAuth Test</title>
+</head>
+<body>
+    <h1>OAuth Test Page</h1>
+    <div id="info"></div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('info').innerHTML = `
+            <h2>URL Parameters:</h2>
+            <pre>${JSON.stringify({
+                code: params.get('code'),
+                error: params.get('error'),
+                errorDescription: params.get('error_description'),
+                fullUrl: window.location.href
+            }, null, 2)}</pre>
+        `;
+    </script>
+</body>
+</html>
