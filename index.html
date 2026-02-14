@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecting...</title>
+    <title>Redirecting to Sora's Stream...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -24,7 +24,7 @@
         }
         .loader {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
+            border-top: 3px solid #6366f1;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -37,8 +37,23 @@
         }
         h1 { font-size: 1.5rem; margin-bottom: 1rem; }
         p { color: #666; line-height: 1.5; }
-        .error { color: #e74c3c; }
-        .success { color: #2ecc71; }
+        .error { color: #dc2626; }
+        .success { color: #16a34a; }
+        button, .button {
+            padding: 12px 24px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        button:hover, .button:hover {
+            background: #4f46e5;
+        }
     </style>
 </head>
 <body>
@@ -51,13 +66,10 @@
     <script>
         (function() {
             console.log('🔄 OAuth callback page loaded');
+            console.log('📍 Current URL:', window.location.href);
             
             try {
-                // Get the full URL including hash/fragment
-                const fullUrl = window.location.href;
-                console.log('📍 Full URL:', fullUrl);
-                
-                // Extract the code from URL parameters
+                // Get the code from URL
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get('code');
                 const error = urlParams.get('error');
@@ -67,44 +79,39 @@
                 console.log('📍 Error present:', !!error);
                 
                 if (error) {
-                    console.error('❌ OAuth error:', error, errorDescription);
                     document.querySelector('.container').innerHTML = `
-                        <h1>Authentication Failed</h1>
-                        <p class="error">${errorDescription || error}</p>
-                        <button onclick="window.close()" style="padding: 10px 20px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                        <h1 class="error">Authentication Failed</h1>
+                        <p>${errorDescription || error}</p>
+                        <button onclick="window.close()">Close</button>
                     `;
                     return;
                 }
                 
                 if (!code) {
-                    console.error('❌ No code in URL');
                     document.querySelector('.container').innerHTML = `
-                        <h1>Authentication Failed</h1>
-                        <p class="error">No authorization code received</p>
-                        <button onclick="window.close()" style="padding: 10px 20px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                        <h1 class="error">Authentication Failed</h1>
+                        <p>No authorization code received</p>
+                        <button onclick="window.close()">Close</button>
                     `;
                     return;
                 }
                 
-                // Success - redirect to app with the code
-                console.log('✅ Auth code received, redirecting to app');
-                
-                // Update UI to show success
+                // Success - update UI
                 document.querySelector('.container').innerHTML = `
                     <h1 class="success">✓ Success!</h1>
                     <p>Redirecting you back to the app...</p>
                 `;
                 
-                // Build the custom scheme URL with the code
+                // Build the app URL with the code
                 const appUrl = `app.sora.stream://auth/callback?code=${encodeURIComponent(code)}`;
-                console.log('📍 App URL:', appUrl);
+                console.log('📍 Redirecting to app:', appUrl);
                 
                 // Try multiple methods to open the app
                 setTimeout(() => {
-                    // Method 1: Direct assignment
+                    // Method 1: Direct redirect
                     window.location.href = appUrl;
                     
-                    // Method 2: If direct assignment doesn't work, try iframe (fallback)
+                    // Method 2: Iframe fallback
                     setTimeout(() => {
                         try {
                             const iframe = document.createElement('iframe');
@@ -112,35 +119,36 @@
                             iframe.src = appUrl;
                             document.body.appendChild(iframe);
                             
-                            // Remove iframe after a delay
+                            // Clean up iframe after a delay
                             setTimeout(() => {
                                 if (iframe.parentNode) {
                                     iframe.parentNode.removeChild(iframe);
                                 }
                             }, 2000);
                         } catch (e) {
-                            console.log('Iframe method failed:', e);
+                            console.log('Iframe failed:', e);
                         }
                         
-                        // Method 3: Show manual link as last resort
+                        // Method 3: Show manual link if nothing works
                         setTimeout(() => {
                             document.querySelector('.container').innerHTML = `
                                 <h1 class="success">✓ Success!</h1>
-                                <p>If the app doesn't open automatically, click the button below:</p>
-                                <a href="${appUrl}" style="display: inline-block; padding: 12px 24px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px;">
-                                    Open Sora's Stream
-                                </a>
+                                <p>Click the button below to open the app:</p>
+                                <a href="${appUrl}" class="button">Open Sora's Stream</a>
+                                <p style="font-size: 12px; margin-top: 20px; color: #999;">
+                                    If the app doesn't open, make sure it's installed and try again.
+                                </p>
                             `;
-                        }, 3000);
+                        }, 2000);
                     }, 500);
                 }, 1000);
                 
             } catch (err) {
-                console.error('❌ Error in callback handler:', err);
+                console.error('❌ Error in callback:', err);
                 document.querySelector('.container').innerHTML = `
-                    <h1>Unexpected Error</h1>
-                    <p class="error">${err.message}</p>
-                    <button onclick="window.close()" style="padding: 10px 20px; margin-top: 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+                    <h1 class="error">Unexpected Error</h1>
+                    <p>${err.message}</p>
+                    <button onclick="window.close()">Close</button>
                 `;
             }
         })();
