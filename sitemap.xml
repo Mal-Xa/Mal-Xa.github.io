@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Portfolio -->
+  <url>
+    <loc>https://mal-xa.github.io/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- GameHub Project -->
+  <url>
+    <loc>https://github.com/Mal-Xa/soratechtip.gamehub</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Result Downloader -->
+  <url>
+    <loc>https://github.com/Mal-Xa/result_downloader</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Streaming App -->
+  <url>
+    <loc>https://github.com/Mal-Xa/Sora-s-Stream</loc>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
